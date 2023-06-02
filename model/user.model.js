@@ -2,12 +2,25 @@ const mongoose = require('mongoose');
 
 
 const userSchema= mongoose.Schema({
-    name: String,
+    name:{
+        type:String,
+        required:true
+    },
     email: {
         type: String,
         unique: true,
+        required:true
     },
-    phone: String,
+    password: {
+        type: String,
+      
+        required:true
+    },
+    phone: {
+        type: String,
+        required:true
+
+    },
     verificationCode:'UUID',
     varified:{
         type:Boolean,

@@ -1,12 +1,24 @@
 const {randomUUID} = require('crypto');
-const {transporter,send}=require('../eamil')
+const {transporter,send}=require('../email')
+const Users=require('../model/user.model')
 
-   const  register=(req,res)=>{
+  const  register= async (req,res)=>{
 
   const x=randomUUID()
-  console.log(x);
-  send(x,"verify",req.body.email)
+  const newUser = new Users(
+    req.body
+  )
 
+  newUser.save()
+  .then(user=>{
+    send(x,"Verify Your Email",req.body.email)
+  })
+  .catch(error=>{
+    res.status(500)
+    res.send(error)
+  })
+
+  
     }
  
     
