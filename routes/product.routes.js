@@ -6,7 +6,7 @@ router.use(express.json());
 router.post('/api/add', ProductController.addProduct)
 router.get('/api/all', ProductController.getAll)
 router.get('/api/:id', ProductController.getProductById)
-router.put('/api/:id', ProductController.editProduct)
-router.delete('/api/:id', ProductController.deleteProduct)
+router.put('/api/edit/:id', ProductController.editProduct)
+router.delete('/api/delete/:id', ProductController.deleteProduct)
 
 module.exports=router;

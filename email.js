@@ -20,7 +20,7 @@ function send(body,subject,sendTo){
        
         to:sendTo,
         subject:subject ,
-        text:"http://localhost:3000/user/verify"+body
+        text:body
       };
       
       transport.sendMail(mailOptions, function(error, info){

@@ -11,5 +11,6 @@ router.use(urlencodedParser)
 router.post('/register',Middleware.hashPass,UserController.register)
 router.post('/login',Middleware.hashPass,UserController.login)
 router.get('/:token',UserController.verifyUser)
-
+router.post('/forgot',UserController.forgetPassword)
+router.post('/changepassword',UserController.changePassword)
 module.exports=router;
