@@ -1,11 +1,12 @@
 const express=require('express');
 const app = express();
 require('dotenv').config()
+const PORT=process.env.PORT
 
 const mongoose=require('mongoose');
 
 const dbConnect=()=>{
-    mongoose.connect('mongodb://localhost:27017/repliq')
+    mongoose.connect(process.env.DATABASE_HOST)
     .then(()=>console.log('Database connected'))
     .catch(err=>console.log('Error connecting'))
 }
@@ -14,7 +15,6 @@ const dbConnect=()=>{
 const userRoute=require('./routes/user.routes')
 const productRoute=require('./routes/product.routes')
 const orderRoute=require('./routes/order.routes')
-const PORT=process.env.PORT
 
 app.use("/user",userRoute)
 app.use("/product",productRoute)

@@ -1,15 +1,16 @@
 const { text } = require('body-parser');
 const { model } = require('mongoose');
 const nodemailer=require('nodemailer')
+require('dotenv').config()
 
 var transport = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
+    host: process.env.EMAIL_HOST,
+    port: process.env.Email_PORT,
     ignoreTLS: true,
     secure: true,
     auth: {
-      user: "abcdhealthcare24@gmail.com",
-      pass: "edmhnqgrzwkdyfik"
+      user: process.env.EAMIL_USER,
+      pass: process.env.EMAIL_PASSWORD
     }
   });
   
