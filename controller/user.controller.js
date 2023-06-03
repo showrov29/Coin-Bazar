@@ -1,7 +1,7 @@
 const {randomUUID} = require('crypto');
 const {transporter,send}=require('../email')
 const Users=require('../model/user.model');
-
+const bcrypt=require('bcrypt')
 
   const  register= async (req,res)=>{
 
@@ -12,7 +12,10 @@ const Users=require('../model/user.model');
 
   newUser.save()
   .then(user=>{
-    send("http://localhost:3000/user/verify"+x,"Verify Your Email",req.body.email)
+    send("http://localhost:3000/user/verify/"+x,"Verify Your Email",req.body.email)
+    res.json({
+      message:"Success"
+    })
   })
   .catch(error=>{
     res.status(500)
@@ -28,10 +31,30 @@ const Users=require('../model/user.model');
 
    try{ 
     const user= await  Users.findOne({ email: req.body.email})
+    const data={
+      name:user.name,
+      email:user.email,
+      phone:user.phone
+    }
 
     if (user) {
       if (user.varified==true) {
       
+        bcrypt.compare(req.body.password, user.password, function(err, result) {
+         if (result) {
+          res.json({
+            message:"success",
+            data:data,
+            
+          })
+         }
+         else{
+          res.status(403)
+          res.json({
+            message:"Incorrect password",
+          })
+         }
+      });
       
       }
       else{
@@ -86,12 +109,13 @@ const Users=require('../model/user.model');
         
        res.json({
         success:true,
-        token:req.params.token
-
+        message:"Your account has been verified"
        })
     }
 
-
+    const upadateEmail = (req,res)=>{
+      
+    }
 
 
 

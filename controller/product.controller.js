@@ -1,10 +1,43 @@
+const Products=require('../model/product.model')
+
 const addProduct=(req,res)=>{
     try{
+       
+        const product={
+            name:req.body.name,
+            quantity:req.body.quantity,
+            price:req.body.price,
+            productCode:req.body.productCode,
+            description:req.body.description,
+            profileImage:req.files[0].filename,
+            
+            // descriptionImage2:req.files[2].filename || null,
+            // descriptionImage3:req.files[3].filename || null
+        }
+        if (req.files[1]) {
+           product.descriptionImage1=req.files[1].filename 
+        }
+ 
+        if (req.files[2]){
+            product.descriptionImage2=req.files[2].filename 
+        }
+        if (req.files[3]){
+            product.descriptionImage3=req.files[3].filename 
+        }
 
-        res.json({
-            "message":"product added successfully",
-            "success":true
+        const newProduct=new Products(product)
+        newProduct.save()
+        .then(product =>{
+            
+            res.json({
+                message:"Product added successfully",
+                success:true
+            })
         })
+        .catch(err =>{
+            console.log(err);
+        })
+       
     }
     catch(err){
 
@@ -12,11 +45,13 @@ const addProduct=(req,res)=>{
     }
 
 }
-const getAll=(req,res)=>{
+const getAll= async(req,res)=>{
     try{
 
+        const products=await Products.find()
+
         res.json({
-           products:['1','2','3','4','5','6','7','8','9'],
+           products:products,
             success:true
         })
     }
