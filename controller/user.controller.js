@@ -1,6 +1,7 @@
 const {randomUUID} = require('crypto');
 const {transporter,send}=require('../email')
 const Users=require('../model/user.model');
+
 const bcrypt=require('bcrypt')
 
   const  register= async (req,res)=>{
@@ -43,7 +44,8 @@ const bcrypt=require('bcrypt')
         bcrypt.compare(req.body.password, user.password, function(err, result) {
          if (result) {
           res.json({
-            message:"success",
+            success: true,
+            message: 'Login successful',
             data:data,
             
           })
