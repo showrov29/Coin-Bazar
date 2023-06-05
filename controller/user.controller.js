@@ -1,7 +1,8 @@
 const {randomUUID} = require('crypto');
 const {transporter,send}=require('../email')
 const Users=require('../model/user.model');
-
+const jwt=require('jsonwebtoken');
+require('dotenv').config();
 const bcrypt=require('bcrypt')
 
   const  register= async (req,res)=>{
@@ -13,6 +14,7 @@ const bcrypt=require('bcrypt')
 
   newUser.save()
   .then(user=>{
+
     send("http://localhost:3000/user/verify/"+x,"Verify Your Email",req.body.email)
     res.json({
       message:"Success"
@@ -31,7 +33,8 @@ const bcrypt=require('bcrypt')
     const login = async (req,res)=>{
 
    try{ 
-    const user= await  Users.findOne({ email: req.body.email})
+     const user= await  Users.findOne({ email: req.body.email})
+    const token= jwt.sign({id:user._id,name:user.name},process.env.SECRET_KEY,{expiresIn:"2d"})
     const data={
       name:user.name,
       email:user.email,
@@ -46,7 +49,7 @@ const bcrypt=require('bcrypt')
           res.json({
             success: true,
             message: 'Login successful',
-            data:data,
+            token:token,
             
           })
          }
