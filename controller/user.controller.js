@@ -49,7 +49,7 @@ const bcrypt=require('bcrypt')
           res.json({
             success: true,
             message: 'Login successful',
-            token:token,
+            token:"Bearer "+token,
             
           })
          }

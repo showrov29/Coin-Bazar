@@ -1,9 +1,11 @@
 const express=require('express');
+
 const router=express.Router();
 const ProductController = require('../controller/product.controller')
 const bodyParser = require('body-parser');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 const multer  = require('multer')
+const passport=require('passport');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {

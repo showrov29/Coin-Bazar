@@ -15,9 +15,11 @@ const dbConnect=()=>{
 const userRoute=require('./routes/user.routes')
 const productRoute=require('./routes/product.routes')
 const orderRoute=require('./routes/order.routes')
-
+const passport=require('passport')
+require('./middleware/passport')
+app.use(passport.initialize())
 app.use("/user",userRoute)
-app.use("/product",productRoute)
+app.use("/product",passport.authenticate('jwt',{session:false}),productRoute)
 app.use("/order",orderRoute)
 app.use((req,res)=>{
 
