@@ -6,11 +6,15 @@ const productSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    productCode:{
-        type:Number,
+    team:{
+        type:String,
         required:true,
-        unique:true
-
+        
+    },
+    category:{
+        type:String,
+        required:true,
+        
     },
     quantity:{
         type:Number,

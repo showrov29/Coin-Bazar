@@ -1,5 +1,11 @@
+const Orders=require("../model/order.model")
 const addOrder=(req,res)=>{
     try{
+
+        let newOrder=new Orders(
+            req.body
+        )
+        newOrder.save()
 
         res.json({
             "message":"Order added successfully",
@@ -27,6 +33,20 @@ const getAll=(req,res)=>{
 
     
 
+}
+
+
+const  getPendingOrder=(res,req)=>{
+    try{
+
+        res.json({
+            success:true,
+            orders:[]
+        })
+    }
+    catch(err){
+        console.log(err);
+    }
 }
 const getOrderById=(req,res)=>{
     try{
