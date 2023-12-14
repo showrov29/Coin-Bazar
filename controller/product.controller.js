@@ -10,7 +10,7 @@ const addProduct = (req, res) => {
 		// 	description: req.body.description,
 		// 	images: req.files,
 		// };
-
+		req.body.userId = req.user.id;
 		const newProduct = new Products(req.body);
 		newProduct
 			.save()
@@ -21,6 +21,7 @@ const addProduct = (req, res) => {
 				});
 			})
 			.catch((err) => {
+				res.status(500);
 				console.log(err);
 			});
 	} catch (err) {
